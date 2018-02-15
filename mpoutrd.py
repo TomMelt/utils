@@ -65,15 +65,19 @@ with open(filename) as infile:
         # find the line number where the coefficients begin
         if "Orb     Occ        Energy       Coefficients" in line:
             START_LINE=num+2
+            print(START_LINE)
             for i, n in enumerate(numContractions):
-                linesPerContraction[i] = (int(n/MOLPRO_COEFF_WIDTH)+2)
+                linesPerContraction[i] = (int((n-1)/MOLPRO_COEFF_WIDTH)+2)
+                print(linesPerContraction[i],n,MOLPRO_COEFF_WIDTH,int(n/MOLPRO_COEFF_WIDTH))
                 LINES += linesPerContraction[i]*(n+1)
+                print(START_LINE+LINES,linesPerContraction)
 
         # read in all required data
         if num >= START_LINE and num < START_LINE+LINES:
             data.append(line)
 
 print("numContractions=",numContractions)
+#print(data)
 
 coeffinfo=[]
 
